@@ -1,7 +1,7 @@
 Package: oncoscanR
 Type: Package
 Title: Meta-analyses of CNV segments
-Version: 0.2.1
+Version: 0.1.1
 Authors@R: person("Yann", "Christinat", email = "yann.christinat@hcuge.ch", role = c("aut", "cre"))
 Description: Taking copy number segments as input (either ChAS export file or ChAS-like text file), 
     identify chromosome arms that are globally altered and computes various scores.

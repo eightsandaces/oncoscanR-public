@@ -276,61 +276,6 @@ score_avgcn <- function(segments, kit.coverage){
 }
 
 
-#' Estimates the number of whole-genome doubling events (WGD).
-#'
-#' @details Based on the publication from Carter et al. (Nature Biotechnology 2012; PubMed ID: 22544022).
-#' On a pan-cancer cohort, they observed that tumors that underwent one whole-genome doubling event had a
-#' ploidy (average copy number) between 2.2 and 3.4. This function relies on the function \code{score_avgcn}
-#' to compute the ploidy.
-#'
-#' @param segments A \code{GRanges} object containing the segments, their copy number and copy number types.
-#' @param kit.coverage A \code{GRanges} object containing the regions covered on each chromosome arm.
-#'
-#' @return A named list with two values: WGD (whole-genome doubling events) and avgCN (the average copy
-#' number). WGD values are 0 for no WGD event, 1 for one WGD event, 2 for several WGD events.
-#' @export
-#'
-#' @examples
-#' score_estwgd(segs.chas_example, oncoscan_na33.cov)
-score_estwgd <- function(segments, kit.coverage){
-  # Get the average copy number
-  avgcn <- score_avgcn(segments, kit.coverage)
-
-  # Estimate the number of WGD events
-  wgd.est <- ifelse(avgcn > 3.4, 2, ifelse(avgcn > 2.2, 1, 0))
-
-  return(c(WGD=wgd.est, avgCN=avgcn))
-}
-
-
-#' Compute the number of LSTs, normalized by the number of WGD events.
-#'
-#' @details Compute the number of LSTs in non-LOH segments via the \code{score_lst} function and subtract
-#' the extra noise induced by WGD events: nLST = LST - 7*W/2 where W is the number of WGD events.
-#' A sample is HRD positive (deficient in HR pathway) if nLST is >13. If nLST is >19 then the confidence is
-#' high. This score was linked to BRCA1/2-deficient tumors.
-#'
-#' @param segments A \code{GRanges} object containing the segments, their copy number and copy number types.
-#' @param n.wgd Number of whole-genome doubling events (0 if diploid).
-#' @param kit.coverage A \code{GRanges} object containing the regions covered on each chromosome arm.
-#'
-#' @return A named list with the number of nLSTs and the corresponding label ('Positive (high confidence)',
-#' 'Positive (low confidence)', 'Negative').
-#' @export
-#'
-#' @examples
-#' w <- score_estwgd(segs.chas_example, oncoscan_na33.cov)
-#' score_nlst(segs.chas_example, w['WGD'], oncoscan_na33.cov)
-score_nlst <- function(segments, n.wgd, kit.coverage){
-  lst.noLOH <- score_lst(segments[segments$cn.type != cntype.loh], kit.coverage)
-
-  nlst <- max(0, lst.noLOH - 3.5*as.numeric(n.wgd))
-  label <- ifelse(nlst>=20, 'Positive (high confidence)',
-                  ifelse(nlst>13, 'Positive (low confidence)', 'Negative'))
-  return(c(nLST=nlst, HRD=label))
-}
-
-
 #' Computes the total number of Mbp altered.
 #'
 #' @param segments A \code{GRanges} object containing the segments, their copy number and copy number types.

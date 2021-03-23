@@ -32,12 +32,6 @@ Procedure based on the paper from Abkevich et al., Br J Cancer 2012 (PMID: 23047
 Number of LOH segments larger than 15Mb but excluding segments on chromosomes with a global LOH alteration. 
 This score was linked to BRCA1/2-deficient tumors.
 
-### Score nLST
-HRD score developed at HUG and based on the LST score by Popova et al. but normalized by an estimation of the number of
-whole-genome doubling events.
-
-`nLST = LST - 7*W/2` where `W` is the number of whole-genome doubling events
-
 ### Score TDplus
 Procedure based on the paper from Popova et al., Cancer Res 2016 (PMID: 26787835). The TDplus
 score is defined as the number of regions larger than 1Mb but smaller or equal to 10Mb with a gain of one
@@ -48,8 +42,8 @@ his second category. Nonetheless it is reported by the function but not by the s
 
 ## Installation
 There are two options to install the package: 
-1. Download the `oncoscanR_0.2.0.tar.gz` file (stable version). Then in R, set the working directory to where the
-compressed package is and run `install.packages('oncoscanR_0.2.0.tar.gz', repos=NULL, type='source')`.
+1. Download the `oncoscanR_0.1.1.tar.gz` file (stable version). Then in R, set the working directory to where the
+compressed package is and run `install.packages('oncoscanR_0.1.1.tar.gz', repos=NULL, type='source')`.
 2. In R, install the devtools package (`install.packages('devtools')`), load it (`library(devtools)`), then run
 `install_github('yannchristinat/oncoscanR')`.
 
@@ -72,13 +66,9 @@ If everything is setup fine, it should return a list with no arm-level alteratio
 
 ## Change log
 
-### What's new in v0.2
-- Novel HRD score (nLST: number of LSTs, normalized by ploidy): `score_nlst`
-- Change in Oncoscan workflow to use the nLST score and thresholds.
+### What's new in v0.1.1
 - New function to compute the number of Mb altered (with or without LOH): `score_mbalt`
 - New function to compute the average copy number: `score_avgcn`
-- New function to estimate the number of whole-genome duplication events (based on the average copy number and the
-thresholds defined by Carter et al.): `score_estwgd`
 
 ## Usage
 The main workflow can be launched either in R via the `workflow_oncoscan.run(chas.fn, gender)` function or via the
@@ -98,7 +88,8 @@ The script will output a JSON string into the terminal with all the computed inf
     "GAIN": [19p", "19q", "1q", "20p", "20q", "3q", "5p", "6p", "9p", "9q", "Xp", "Xq"]
   },
   "scores": {
-    "HRD": "Negative, nLST=12",
+    "LST": 12,
+    "LOH": 10,
     "TDplus": 22,
     "avgCN": "2.43"
   },

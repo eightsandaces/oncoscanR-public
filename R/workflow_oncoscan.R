@@ -17,7 +17,7 @@
 #'
 #' @return A list of lists with the following elements:
 #' \code{armlevel = list(AMP= list of arms, GAIN= list of arms, LOSS= list of arms, LOH= list of arms),
-#' scores = list(LST= number, LOH= number, TDplus= number, TD= number),
+#' scores = list(LST= number, LOH= number, TDplus= number),
 #' gender = gender as given by the parameter,
 #' file = path of the ChAS file as given by the parameter)}
 #'
@@ -75,8 +75,7 @@ workflow_oncoscan.run <- function(chas.fn, gender){
                             LOSS=sort(names(armlevel.loss)),
                             LOH=sort(names(armlevel.loh)),
                             GAIN=sort(names(armlevel.gain)))
-  scores.list <- list(LST=n.lst, LOH=n.loh, TDplus=n.td$TDplus,
-                      avgCN=substr(as.character(wgd['avgCN']), 1, 4))
+  scores.list <- list(LST=n.lst, LOH=n.loh, TDplus=n.td$TDplus)
 
   return(list(armlevel=armlevel_alt.list,
        scores=scores.list,

@@ -45,7 +45,7 @@ There are two options to install the package:
 1. Download the `oncoscanR_0.1.1.tar.gz` file (stable version). Then in R, set the working directory to where the
 compressed package is and run `install.packages('oncoscanR_0.1.1.tar.gz', repos=NULL, type='source')`.
 2. In R, install the devtools package (`install.packages('devtools')`), load it (`library(devtools)`), then run
-`install_github('yannchristinat/oncoscanR')`.
+`install_github('yannchristinat/oncoscanR-public')`.
 
 The package requires the prior installation of the packages `GenomicRanges` (bioconductor), `magrittr`, `jsonlite` and
 `readr`.
@@ -90,8 +90,7 @@ The script will output a JSON string into the terminal with all the computed inf
   "scores": {
     "LST": 12,
     "LOH": 10,
-    "TDplus": 22,
-    "avgCN": "2.43"
+    "TDplus": 22
   },
   "gender": "F",
   "file": "H19001012_gene_list_full_location.txt"
